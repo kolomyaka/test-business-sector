@@ -39,6 +39,7 @@ export const PaginationBlock = (props: Props) => {
         count={10}
         page={page}
         onChange={handleChange}
+        sx={{ width: '560px', margin: '15px auto' }}
         renderItem={(item) => (
           <PaginationItem
             components={{ previous: prevButton, next: nextButton }}

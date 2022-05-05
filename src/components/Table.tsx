@@ -1,10 +1,12 @@
-import { Grid, Typography } from '@mui/material';
-import React from 'react';
+import { Grid, Typography, CircularProgress } from '@mui/material';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import ArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { TableItemBlock } from './TableItemBlock';
 import { useSelector } from 'react-redux';
 import { selectLoadingStatus, selectPostsItem } from '../store/selectors/postSelectors';
+import { useAppDispatch } from '../store/store';
+import { fetchPostsThunk } from '../store/thunks/fetchPosts';
 type Props = {};
 
 const HeaderGrid = styled(Grid)`
@@ -24,14 +26,30 @@ const ArrowDownComponent = styled(ArrowDownIcon)`
   margin-left: 30px;
 `;
 
+const CenterLoader = styled('div')`
+  text-align: center;
+  margin-top: 453px;
+  margin-bottom: 453px;
+`;
+
 export const Table = (props: Props) => {
   const isLoading = useSelector(selectLoadingStatus);
   const posts = useSelector(selectPostsItem);
+  const dispatch = useAppDispatch();
+  const [order, setOrder] = useState('desc');
+  const handleSortById = () => {
+    dispatch(fetchPostsThunk(1, 'id', order));
+    if (order === 'desc') {
+      setOrder('asc');
+    } else {
+      setOrder('desc');
+    }
+  };
 
   return (
     <>
       <HeaderGrid container>
-        <Grid item md={1.5}>
+        <Grid item md={1.5} onClick={handleSortById}>
           <FlexWrapper>
             <Typography color="white">ID</Typography>
             <ArrowDownComponent />
@@ -51,12 +69,17 @@ export const Table = (props: Props) => {
         </Grid>
       </HeaderGrid>
 
-      {posts &&
+      {isLoading === false ? (
         posts.map((post) => {
           return (
             <TableItemBlock key={post.title} id={post.id} title={post.title} body={post.body} />
           );
-        })}
+        })
+      ) : (
+        <CenterLoader>
+          <CircularProgress color="inherit" />
+        </CenterLoader>
+      )}
     </>
   );
 };

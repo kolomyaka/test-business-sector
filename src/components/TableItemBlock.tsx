@@ -24,7 +24,9 @@ export const TableItemBlock = ({ id, body, title }: Props) => {
       <Grid container alignItems="center" sx={{ border: '1px solid #E3E6EC' }}>
         <Grid item md={1.5}>
           <TableItem variant="outlined" square>
-            <Typography sx={{ textAlign: 'center', padding: '31.5px' }}>{id}</Typography>
+            <TableItemTypography sx={{ textAlign: 'center', padding: '31.5px' }}>
+              {id}
+            </TableItemTypography>
           </TableItem>
         </Grid>
         <Grid item md={5.25}>
