@@ -1,7 +1,6 @@
 import { Grid, Paper, Typography } from '@mui/material';
 import styledEngine from '@mui/styled-engine';
 import React from 'react';
-import styled from 'styled-components';
 
 type Props = {
   id: number;
