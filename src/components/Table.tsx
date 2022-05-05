@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { selectLoadingStatus, selectPostsItem } from '../store/selectors/postSelectors';
 
 import ArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { Post } from '../store/types/Types';
 
 const HeaderGrid = styled(Grid)`
   background-color: #474955;
@@ -44,14 +45,13 @@ type column = {
 
 type Props = {
   sortBy: string;
+  posts: Post[];
+  isLoading: boolean;
   columns: column[];
   changeSort: (type: string) => void;
 };
 
-export const Table = ({ columns, sortBy, changeSort }: Props) => {
-  const isLoading = useSelector(selectLoadingStatus);
-  const posts = useSelector(selectPostsItem);
-
+export const Table = ({ columns, sortBy, posts, isLoading, changeSort }: Props) => {
   return (
     <>
       <HeaderGrid container>

@@ -27,14 +27,17 @@ const SearchTextBlock = styled(TextField)`
   }
 `;
 
-type Props = {};
+type Props = {
+  setSearch: (text: string) => void;
+};
 
-export const SearchBlock = (props: Props) => {
+export const SearchBlock = ({ setSearch }: Props) => {
   return (
     <>
       <SearchTextBlock
         placeholder="Поиск"
         fullWidth
+        onChange={(e) => setSearch(e.target.value)}
         sx={{ marginTop: '23px', marginBottom: '15px' }}
         InputProps={{
           endAdornment: (
