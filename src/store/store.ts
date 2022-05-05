@@ -1,7 +1,10 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
+import { useDispatch } from 'react-redux';
+import postsSliceReducer from './slices/postSlice';
 
 
 const rootReducer = combineReducers({
+  posts: postsSliceReducer
 })
 
 export const store = configureStore({
@@ -11,4 +14,5 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = typeof store;
-export type AppDispatch = AppStore['dispatch'];
+export type AppDispatch = typeof store.dispatch
+export const useAppDispatch = () => useDispatch<AppDispatch>()

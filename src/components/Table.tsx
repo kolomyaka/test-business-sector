@@ -3,7 +3,8 @@ import React from 'react';
 import styled from 'styled-components';
 import ArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { TableItemBlock } from './TableItemBlock';
-
+import { useSelector } from 'react-redux';
+import { selectLoadingStatus, selectPostsItem } from '../store/selectors/postSelectors';
 type Props = {};
 
 const HeaderGrid = styled(Grid)`
@@ -23,8 +24,10 @@ const ArrowDownComponent = styled(ArrowDownIcon)`
   margin-left: 30px;
 `;
 
-const posts: any[] = [];
 export const Table = (props: Props) => {
+  const isLoading = useSelector(selectLoadingStatus);
+  const posts = useSelector(selectPostsItem);
+
   return (
     <>
       <HeaderGrid container>
@@ -50,7 +53,9 @@ export const Table = (props: Props) => {
 
       {posts &&
         posts.map((post) => {
-          return <TableItemBlock id={post.id} title={post.title} body={post.body} />;
+          return (
+            <TableItemBlock key={post.title} id={post.id} title={post.title} body={post.body} />
+          );
         })}
     </>
   );
