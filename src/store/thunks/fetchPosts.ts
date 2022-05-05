@@ -3,7 +3,6 @@ import { AppDispatch } from "../store";
 import { postSlice } from '../slices/postSlice'
 
 export const fetchPostsThunk = (page: number, sortBy: string ='id', order: string = 'asc') => async (dispatch: AppDispatch) => {
-  console.log('hello');
   
   try {
     dispatch(postSlice.actions.fetchPosts())

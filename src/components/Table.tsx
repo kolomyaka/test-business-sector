@@ -1,13 +1,12 @@
 import { Grid, Typography, CircularProgress } from '@mui/material';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import ArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { TableItemBlock } from './TableItemBlock';
 import { useSelector } from 'react-redux';
 import { selectLoadingStatus, selectPostsItem } from '../store/selectors/postSelectors';
-import { useAppDispatch } from '../store/store';
-import { fetchPostsThunk } from '../store/thunks/fetchPosts';
-type Props = {};
+
+import ArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 const HeaderGrid = styled(Grid)`
   background-color: #474955;
@@ -26,47 +25,46 @@ const ArrowDownComponent = styled(ArrowDownIcon)`
   margin-left: 30px;
 `;
 
-const CenterLoader = styled('div')`
-  text-align: center;
-  margin-top: 453px;
-  margin-bottom: 453px;
+const ArrowUpComponent = styled(ArrowUpIcon)`
+  color: white;
+  margin-left: 30px;
 `;
 
-export const Table = (props: Props) => {
+const CenterLoader = styled('div')`
+  text-align: center;
+  margin-top: 460px;
+  margin-bottom: 460px;
+`;
+
+type column = {
+  name: string;
+  type: string;
+  width: number;
+};
+
+type Props = {
+  sortBy: string;
+  columns: column[];
+  changeSort: (type: string) => void;
+};
+
+export const Table = ({ columns, sortBy, changeSort }: Props) => {
   const isLoading = useSelector(selectLoadingStatus);
   const posts = useSelector(selectPostsItem);
-  const dispatch = useAppDispatch();
-  const [order, setOrder] = useState('desc');
-  const handleSortById = () => {
-    dispatch(fetchPostsThunk(1, 'id', order));
-    if (order === 'desc') {
-      setOrder('asc');
-    } else {
-      setOrder('desc');
-    }
-  };
 
   return (
     <>
       <HeaderGrid container>
-        <Grid item md={1.5} onClick={handleSortById}>
-          <FlexWrapper>
-            <Typography color="white">ID</Typography>
-            <ArrowDownComponent />
-          </FlexWrapper>
-        </Grid>
-        <Grid item md={5.25}>
-          <FlexWrapper>
-            <Typography color="white">Заголовок</Typography>
-            <ArrowDownComponent />
-          </FlexWrapper>
-        </Grid>
-        <Grid item md={5.25}>
-          <FlexWrapper>
-            <Typography color="white">Описание</Typography>
-            <ArrowDownComponent />
-          </FlexWrapper>
-        </Grid>
+        {columns.map((column) => (
+          <React.Fragment key={column.type}>
+            <Grid key={column.type} item md={column.width} onClick={() => changeSort(column.type)}>
+              <FlexWrapper>
+                <Typography color="white">{column.name}</Typography>
+                {column.type === sortBy ? <ArrowUpComponent /> : <ArrowDownComponent />}
+              </FlexWrapper>
+            </Grid>
+          </React.Fragment>
+        ))}
       </HeaderGrid>
 
       {isLoading === false ? (

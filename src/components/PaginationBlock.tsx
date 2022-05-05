@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Pagination, PaginationItem } from '@mui/material';
 import styled from 'styled-components';
-import { fetchPostsThunk } from '../store/thunks/fetchPosts';
-import { fetchPosts } from '../store/slices/postSlice';
-import { useAppDispatch } from '../store/store';
 
 type Props = {
   page: number;

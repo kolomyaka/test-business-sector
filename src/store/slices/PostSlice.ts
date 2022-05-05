@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
-import { Post, postState, Response } from "../types/Types";
+import { Post, postState } from "../types/Types";
 
 
 const initialState: postState = {
