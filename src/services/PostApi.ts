@@ -1,11 +1,6 @@
 import axios from 'axios';
+import { Post } from '../store/types/Types';
 
-type Post = {
-  userId: number
-  id: number
-  body: string
-  title: string
-}
 
 export const postApi = {
   async fetchPosts(page: number): Promise<Post[]> {
