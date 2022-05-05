@@ -35,6 +35,7 @@ export const SearchBlock = (props: Props) => {
       <SearchTextBlock
         placeholder="Поиск"
         fullWidth
+        sx={{ marginTop: '23px', marginBottom: '15px' }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
