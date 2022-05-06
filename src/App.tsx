@@ -59,12 +59,12 @@ function App() {
         </Container>
         <Table
           columns={columnsItems}
-          posts={filteredPosts ? filteredPosts : posts}
+          data={filteredPosts ? filteredPosts : posts}
           isLoading={isLoading}
           sortBy={sortBy}
           changeSort={handleChangeSortBy}
         />
-        <PaginationBlock page={page} onChange={onChangePage} />
+        {/* <PaginationBlock posts={posts} page={page} onChange={onChangePage} /> */}
       </Container>
     </div>
   );

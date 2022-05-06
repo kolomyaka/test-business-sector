@@ -1,10 +1,14 @@
 import React from 'react';
 import { Pagination, PaginationItem } from '@mui/material';
 import styled from 'styled-components';
+import { Post } from '../store/types/Types';
 
 type Props = {
   page: number;
-  onChange: (e: React.ChangeEvent<unknown>, value: number) => void;
+
+  setPage: (page: number) => void;
+  setPreviousPage: () => void;
+  setNextPage: () => void;
 };
 
 const PaginationItemText = styled.div`
@@ -13,22 +17,32 @@ const PaginationItemText = styled.div`
   font-weight: 600;
 `;
 
-const prevButton = () => {
-  return <PaginationItemText>Назад</PaginationItemText>;
-};
 
-const nextButton = () => {
-  return <PaginationItemText>Далее</PaginationItemText>;
-};
 
-export const PaginationBlock = ({ onChange, page }: Props) => {
+
+
+export const PaginationBlock = ({ page, setPage, setPreviousPage, setNextPage }: Props) => {
+
+  const prevButton = () => {
+    return <PaginationItemText onClick={setPreviousPage}>Назад</PaginationItemText>;
+  };
+
+  const nextButton = () => {
+    return <PaginationItemText onClick={setNextPage}>Далее</PaginationItemText>;
+  };
+  console.log(page);
+
+
   return (
     <>
+
+
+
       <Pagination
         size="large"
         count={10}
         page={page}
-        onChange={onChange}
+        onChange={(e) => console.log(e.target)}
         sx={{ width: '560px', margin: '15px auto' }}
         renderItem={(item) => (
           <PaginationItem

@@ -8,6 +8,8 @@ import { selectLoadingStatus, selectPostsItem } from '../store/selectors/postSel
 
 import ArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Post } from '../store/types/Types';
+import { usePagination } from 'react-use-pagination';
+import { PaginationBlock } from './PaginationBlock';
 
 const HeaderGrid = styled(Grid)`
   background-color: #474955;
@@ -45,13 +47,26 @@ type column = {
 
 type Props = {
   sortBy: string;
-  posts: Post[];
+  data: Post[];
   isLoading: boolean;
   columns: column[];
   changeSort: (type: string) => void;
 };
 
-export const Table = ({ columns, sortBy, posts, isLoading, changeSort }: Props) => {
+export const Table = ({ columns, sortBy, data, isLoading, changeSort }: Props) => {
+
+  const {
+    currentPage,
+    setPage,
+    setNextPage,
+    setPreviousPage,
+    startIndex,
+    endIndex,
+  } = usePagination({ totalItems: data.length, initialPageSize: 11, initialPage: 1 });
+
+  console.log(startIndex, endIndex);
+
+
   return (
     <>
       <HeaderGrid container>
@@ -67,8 +82,21 @@ export const Table = ({ columns, sortBy, posts, isLoading, changeSort }: Props) 
         ))}
       </HeaderGrid>
 
+      <div>
+
+        <button onClick={setPreviousPage} >
+          Previous Page
+        </button>
+        <span>
+          Current Page:
+        </span>
+        <button onClick={setNextPage} >
+          Next Page
+        </button>
+      </div>
+
       {isLoading === false ? (
-        posts.map((post) => {
+        data.slice(startIndex - 10, endIndex - 10).map((post) => {
           return (
             <TableItemBlock key={post.title} id={post.id} title={post.title} body={post.body} />
           );
@@ -78,6 +106,7 @@ export const Table = ({ columns, sortBy, posts, isLoading, changeSort }: Props) 
           <CircularProgress color="inherit" />
         </CenterLoader>
       )}
+      <PaginationBlock page={currentPage} setPage={setPage} setPreviousPage={setPreviousPage} setNextPage={setNextPage} />
     </>
   );
 };
