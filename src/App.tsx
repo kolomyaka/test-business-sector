@@ -22,12 +22,15 @@ function App() {
   const isLoading = useSelector(selectLoadingStatus);
   let posts = useSelector(selectPostsItem);
   const dispatch = useAppDispatch();
-  const [items, setItems] = useState([]);
-  let allPosts = null;
+  let totalPosts = 0
+  const pageSize = 10;
+  const lastPostIndex = page * pageSize;
+  const firstPostIndex = lastPostIndex - pageSize;
+
   // Функция для изменения актуальной страницы
-  const onChangePage = (e: React.ChangeEvent<unknown>, value: number) => {
+  const changePage = (e: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
-  };
+  }
 
   // Функция для сортировки по выбранному столбцу
   const handleChangeSortBy = (type: string) => {
@@ -39,16 +42,23 @@ function App() {
     setSortBy(type);
   };
 
-  // Функция для поиска по значению
   const filteredPosts = posts.filter((post) => {
     return post.body.toLowerCase().includes(search.toLowerCase());
   });
 
+  if (filteredPosts) {
+    totalPosts = filteredPosts.length;
+  } else {
+    totalPosts = posts.length;
+  }
+  let pageCount = Math.ceil(totalPosts / pageSize);
+
+  console.log(pageCount)
+
   useEffect(() => {
-    dispatch(fetchPostsThunk(page, sortBy, order));
-  }, [page, sortBy, dispatch]);
-  allPosts = postApi.fetchAllPosts();
-  console.log(allPosts);
+    dispatch(fetchPostsThunk(sortBy, order));
+  }, [sortBy, dispatch]);
+
 
   return (
     <div className="App">
@@ -59,12 +69,14 @@ function App() {
         </Container>
         <Table
           columns={columnsItems}
+          firstPostIndex={firstPostIndex}
+          lastPostIndex={lastPostIndex}
           data={filteredPosts ? filteredPosts : posts}
           isLoading={isLoading}
           sortBy={sortBy}
           changeSort={handleChangeSortBy}
         />
-        {/* <PaginationBlock posts={posts} page={page} onChange={onChangePage} /> */}
+        <PaginationBlock page={page} setPage={setPage} pageCount={pageCount} changePage={changePage} />
       </Container>
     </div>
   );

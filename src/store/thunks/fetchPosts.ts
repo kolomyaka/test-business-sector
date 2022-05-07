@@ -2,11 +2,11 @@ import { postApi } from "../../services/PostApi";
 import { AppDispatch } from "../store";
 import { postSlice } from '../slices/postSlice'
 
-export const fetchPostsThunk = (page: number, sortBy: string ='id', order: string = 'asc') => async (dispatch: AppDispatch) => {
-  
+export const fetchPostsThunk = (sortBy: string = 'id', order: string = 'asc') => async (dispatch: AppDispatch) => {
+
   try {
     dispatch(postSlice.actions.fetchPosts())
-    const res = await postApi.fetchPosts(page, sortBy, order);
+    const res = await postApi.fetchPosts(sortBy, order);
     if (res.status === 200) {
       dispatch(postSlice.actions.fetchPostsSuccess(res))
     } else {
@@ -14,6 +14,6 @@ export const fetchPostsThunk = (page: number, sortBy: string ='id', order: strin
     }
   } catch (error) {
     console.log(error);
-    
+
   }
 }

@@ -47,24 +47,17 @@ type column = {
 
 type Props = {
   sortBy: string;
+  lastPostIndex: number;
+  firstPostIndex: number;
   data: Post[];
   isLoading: boolean;
   columns: column[];
   changeSort: (type: string) => void;
 };
 
-export const Table = ({ columns, sortBy, data, isLoading, changeSort }: Props) => {
+export const Table = ({ columns, sortBy, data, isLoading, lastPostIndex, firstPostIndex, changeSort }: Props) => {
 
-  const {
-    currentPage,
-    setPage,
-    setNextPage,
-    setPreviousPage,
-    startIndex,
-    endIndex,
-  } = usePagination({ totalItems: data.length, initialPageSize: 11, initialPage: 1 });
 
-  console.log(startIndex, endIndex);
 
 
   return (
@@ -82,21 +75,10 @@ export const Table = ({ columns, sortBy, data, isLoading, changeSort }: Props) =
         ))}
       </HeaderGrid>
 
-      <div>
 
-        <button onClick={setPreviousPage} >
-          Previous Page
-        </button>
-        <span>
-          Current Page:
-        </span>
-        <button onClick={setNextPage} >
-          Next Page
-        </button>
-      </div>
 
       {isLoading === false ? (
-        data.slice(startIndex - 10, endIndex - 10).map((post) => {
+        data.slice(firstPostIndex, lastPostIndex).map((post) => {
           return (
             <TableItemBlock key={post.title} id={post.id} title={post.title} body={post.body} />
           );
@@ -106,7 +88,7 @@ export const Table = ({ columns, sortBy, data, isLoading, changeSort }: Props) =
           <CircularProgress color="inherit" />
         </CenterLoader>
       )}
-      <PaginationBlock page={currentPage} setPage={setPage} setPreviousPage={setPreviousPage} setNextPage={setNextPage} />
+      {/* <PaginationBlock /> */}
     </>
   );
 };

@@ -5,10 +5,9 @@ import { Post } from '../store/types/Types';
 
 type Props = {
   page: number;
-
+  pageCount: number;
   setPage: (page: number) => void;
-  setPreviousPage: () => void;
-  setNextPage: () => void;
+  changePage: (e: React.ChangeEvent<unknown>, value: number) => void
 };
 
 const PaginationItemText = styled.div`
@@ -21,16 +20,15 @@ const PaginationItemText = styled.div`
 
 
 
-export const PaginationBlock = ({ page, setPage, setPreviousPage, setNextPage }: Props) => {
+export const PaginationBlock = ({ page, pageCount, setPage, changePage }: Props) => {
 
   const prevButton = () => {
-    return <PaginationItemText onClick={setPreviousPage}>Назад</PaginationItemText>;
+    return <PaginationItemText>Назад</PaginationItemText>;
   };
 
   const nextButton = () => {
-    return <PaginationItemText onClick={setNextPage}>Далее</PaginationItemText>;
+    return <PaginationItemText>Далее</PaginationItemText>;
   };
-  console.log(page);
 
 
   return (
@@ -40,9 +38,9 @@ export const PaginationBlock = ({ page, setPage, setPreviousPage, setNextPage }:
 
       <Pagination
         size="large"
-        count={10}
+        count={pageCount}
         page={page}
-        onChange={(e) => console.log(e.target)}
+        onChange={changePage}
         sx={{ width: '560px', margin: '15px auto' }}
         renderItem={(item) => (
           <PaginationItem
