@@ -61,7 +61,6 @@ export const Table = ({ sortBy, data, search, lastPostIndex, isLoading, firstPos
     { name: 'Заголовок', type: 'title', width: 5.25 },
     { name: 'Описание', type: 'body', width: 5.25 },
   ];
-  console.log(data.length);
 
   return (
     <>

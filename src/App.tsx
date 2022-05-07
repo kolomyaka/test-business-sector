@@ -46,6 +46,7 @@ function App() {
   const filteredPosts = posts.filter((post) => {
     return post.body.toLowerCase().includes(search.toLowerCase());
   });
+
   totalPosts = filteredPosts.length;
 
 

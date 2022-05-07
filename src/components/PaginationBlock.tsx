@@ -20,7 +20,7 @@ export const PaginationBlock = ({ page, pageCount, changePage }: Props) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate(`page=${page} `)
+    navigate(`page=${page}`)
   }, [page])
 
   const prevButton = () => {
@@ -29,7 +29,6 @@ export const PaginationBlock = ({ page, pageCount, changePage }: Props) => {
   const nextButton = () => {
     return <PaginationItemText>Далее</PaginationItemText>;
   };
-
   if (pageCount) {
     return (
       <>
