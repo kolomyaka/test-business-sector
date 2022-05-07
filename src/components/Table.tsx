@@ -1,15 +1,12 @@
-import { Grid, Typography, CircularProgress, Container } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import React from 'react';
 import styled from 'styled-components';
 import ArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { TableItemBlock } from './TableItemBlock';
-import { useSelector } from 'react-redux';
-import { selectLoadingStatus, selectPostsItem } from '../store/selectors/postSelectors';
 import DangerousIcon from '@mui/icons-material/Dangerous';
 import ArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Post } from '../store/types/Types';
-import { usePagination } from 'react-use-pagination';
-import { PaginationBlock } from './PaginationBlock';
+
 const HeaderGrid = styled(Grid)`
   background-color: #474955;
 `;
@@ -40,6 +37,7 @@ const WarningContainer = styled('div')`
   margin-top: 15%;
 `;
 
+
 type column = {
   name: string;
   type: string;
@@ -56,15 +54,14 @@ type Props = {
   changeSort: (type: string) => void;
 };
 
-export const Table = ({ sortBy, data, search, lastPostIndex, firstPostIndex, changeSort }: Props) => {
-
-
+export const Table = ({ sortBy, data, search, lastPostIndex, isLoading, firstPostIndex, changeSort }: Props) => {
 
   const columnsItems: column[] = [
     { name: 'ID', type: 'id', width: 1.5 },
     { name: 'Заголовок', type: 'title', width: 5.25 },
     { name: 'Описание', type: 'body', width: 5.25 },
   ];
+  console.log(data.length);
 
   return (
     <>
@@ -81,7 +78,8 @@ export const Table = ({ sortBy, data, search, lastPostIndex, firstPostIndex, cha
         ))}
       </HeaderGrid>
 
-      {data.length ? (
+
+      {data.length !== 0 ? (
         data.slice(firstPostIndex, lastPostIndex).map((post) => {
           return (
             <TableItemBlock key={post.title} id={post.id} title={post.title} body={post.body} />

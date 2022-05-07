@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AxiosResponse } from "axios";
 import { Post, postState } from "../types/Types";
 
-
 const initialState: postState = {
   posts: [],
   isLoading: false,
@@ -20,8 +19,8 @@ export const postSlice = createSlice({
       state.isLoading = true;
     },
     fetchPostsSuccess(state, action: PayloadAction<AxiosResponse<Post[]>>) {
-      state.isLoading = false;
       state.posts = action.payload.data;
+      state.isLoading = false;
       state.response = {
         status: action.payload.status,
         statusText: action.payload.statusText,
@@ -37,6 +36,6 @@ export const postSlice = createSlice({
   }
 })
 
-export const { fetchPosts, fetchPostsSuccess, fetchPostsError} = postSlice.actions;
+export const { fetchPosts, fetchPostsSuccess, fetchPostsError } = postSlice.actions;
 
 export default postSlice.reducer;

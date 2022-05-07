@@ -7,17 +7,14 @@ import { Table } from './components/Table';
 import { selectLoadingStatus, selectPostsItem } from './store/selectors/postSelectors';
 import { useAppDispatch } from './store/store';
 import { fetchPostsThunk } from './store/thunks/fetchPosts';
-import { postApi } from './services/PostApi';
 import styled from 'styled-components';
 
 const CenterLoader = styled('div')`
   text-align: center;
-  margin-top: 460px;
-  margin-bottom: 460px;
+  margin-top: 46%;
+  margin-bottom: 46%;
+
 `;
-
-
-
 function App() {
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(1);
@@ -49,14 +46,10 @@ function App() {
   const filteredPosts = posts.filter((post) => {
     return post.body.toLowerCase().includes(search.toLowerCase());
   });
+  totalPosts = filteredPosts.length;
 
-  if (filteredPosts) {
-    totalPosts = filteredPosts.length;
-  } else {
-    totalPosts = posts.length;
-  }
+
   let pageCount = Math.ceil(totalPosts / pageSize);
-
 
   useEffect(() => {
     dispatch(fetchPostsThunk(sortBy, order));
@@ -69,17 +62,18 @@ function App() {
         <Container maxWidth="sm" style={{ margin: 0, padding: 0 }}>
           <SearchBlock setSearch={setSearch} />
         </Container>
-        <Table
-          search={search}
-          firstPostIndex={firstPostIndex}
-          lastPostIndex={lastPostIndex}
-          data={filteredPosts ? filteredPosts : posts}
-          isLoading={isLoading}
-          sortBy={sortBy}
-          changeSort={handleChangeSortBy}
-        />
+        {isLoading
+          ? <CenterLoader><CircularProgress color='inherit' /></CenterLoader>
+          : <Table
+            search={search}
+            firstPostIndex={firstPostIndex}
+            lastPostIndex={lastPostIndex}
+            data={filteredPosts}
+            isLoading={isLoading}
+            sortBy={sortBy}
+            changeSort={handleChangeSortBy}
+          />}
         <PaginationBlock page={page} pageCount={pageCount} changePage={changePage} />
-
       </Container>
     </div>
   );

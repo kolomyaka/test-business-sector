@@ -53,7 +53,6 @@
   },
   "devDependencies": {
     "@mui/icons-material": "^5.6.2",
-    "@types/styled-components": "^5.1.25",
-    "react-use-pagination": "^2.0.1"
+    "@types/styled-components": "^5.1.25"
   }
 }

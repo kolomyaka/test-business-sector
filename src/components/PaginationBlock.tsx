@@ -1,14 +1,7 @@
 import React, { useEffect } from 'react';
 import { Pagination, PaginationItem } from '@mui/material';
 import styled from 'styled-components';
-import { Post } from '../store/types/Types';
-import { useLocation, Link, useNavigate } from 'react-router-dom';
-
-type Props = {
-  page: number;
-  pageCount: number;
-  changePage: (e: React.ChangeEvent<unknown>, value: number) => void
-};
+import { Link, useNavigate } from 'react-router-dom';
 
 const PaginationItemText = styled.div`
   color: #474955;
@@ -16,18 +9,19 @@ const PaginationItemText = styled.div`
   font-weight: 600;
 `;
 
-
-
+type Props = {
+  page: number;
+  pageCount: number;
+  changePage: (e: React.ChangeEvent<unknown>, value: number) => void
+};
 
 
 export const PaginationBlock = ({ page, pageCount, changePage }: Props) => {
-  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     navigate(`page=${page} `)
   }, [page])
-  console.log(page)
 
   const prevButton = () => {
     return <PaginationItemText>Назад</PaginationItemText>;
