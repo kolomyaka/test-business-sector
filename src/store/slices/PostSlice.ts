@@ -12,7 +12,7 @@ const initialState: postState = {
 }
 
 export const postSlice = createSlice({
-  name: 'posts',
+  name: 'postSlice',
   initialState,
   reducers: {
     fetchPosts(state) {
