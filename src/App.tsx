@@ -54,7 +54,7 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchPostsThunk(sortBy, order));
-  }, [sortBy, dispatch]);
+  }, [sortBy, dispatch, order]);
 
 
   return (

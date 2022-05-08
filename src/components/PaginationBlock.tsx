@@ -21,7 +21,7 @@ export const PaginationBlock = ({ page, pageCount, changePage }: Props) => {
 
   useEffect(() => {
     navigate(`page=${page}`)
-  }, [page])
+  }, [page, navigate])
 
   const prevButton = () => {
     return <PaginationItemText>Назад</PaginationItemText>;
